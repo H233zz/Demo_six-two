@@ -1,0 +1,32 @@
+  public class App extends Application {
+    
+    	@Override
+    	public void onCreate() {
+    		super.onCreate();
+    		initLoader();
+    	}
+    
+    	/*
+    	 * ImageLoader 初始化
+    	 */
+    	void initLoader() {
+    		File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "imageloader/Cache");
+    
+    		// 图片显示参数设置
+    		DisplayImageOptions options = new DisplayImageOptions.Builder()
+    				.cacheInMemory(true)// 内存缓存
+    				.cacheOnDisk(true)// 缓存磁盘
+    				.showImageOnLoading(R.mipmap.ic_launcher)// 加载中
+    				.showImageOnFail(R.mipmap.ic_launcher)// 错误
+    				.showImageForEmptyUri(R.mipmap.ic_launcher)// URI错误
+    				.build();
+    
+    		ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(
+    				this)
+    				.defaultDisplayImageOptions(options)
+    				.diskCache(new UnlimitedDiskCache(cacheDir))//自定义缓存路径
+    				.build();
+    		ImageLoader.getInstance().init(configuration);
+    
+    	}
+    }
